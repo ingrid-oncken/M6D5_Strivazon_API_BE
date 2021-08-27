@@ -22,19 +22,43 @@ categoriesRouter
     res.send(createOneCategory)
   })
 
-categoriesRouter.route("/:id").get(async (req, res, next) => {
-  try {
-    const getOneCat = await Category.findByPk(req.params.id)
-
-    if (getOneCat === null) {
-      res
-        .status(404)
-        .send(`The category with the id ${req.params.id} was not found`)
-    } else {
-      console.log(category instanceof Category)
+categoriesRouter
+  .route("/:id")
+  .get(async (req, res, next) => {
+    try {
+      const getOneCat = await Category.findByPk(req.params.id)
+      res.send(getOneCat)
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    next(error)
-  }
-})
+  })
+  .put(async (req, res, next) => {
+    try {
+      const updateCategory = await Category.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+      })
+
+      res.send(updateCategory)
+    } catch (error) {
+      next(error)
+    }
+  })
+  .delete(async (req, res, next) => {
+    try {
+      const delOneCat = await Category.destroy({
+        where: {
+          id: req.params.id,
+        },
+      })
+      if (delOneCat > 0) {
+        res.send(`The category with id ${req.params.id} was deleted sucessfuly`)
+      } else {
+        res.status(404).send(`Id not found`)
+      }
+    } catch (error) {
+      next(error)
+    }
+  })
 export default categoriesRouter

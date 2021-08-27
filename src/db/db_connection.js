@@ -11,7 +11,7 @@ const sequelize = new Sequelize(PGDATABASE, PGUSERNAME, PGPASSWORD, {
 export const syncSequelize = async () => {
   try {
     await sequelize.authenticate()
-    await sequelize.sync()
+    await sequelize.sync({ force: true })
 
     console.log("📚 DataBase authenticated")
   } catch (error) {

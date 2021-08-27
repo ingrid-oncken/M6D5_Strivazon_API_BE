@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import { syncSequelize } from "./db/db_connection.js"
 import categoriesRouter from "./services/category/indexCategory.js"
+import productsRouter from "./services/products/indexProducts.js"
 
 const server = express()
 
@@ -11,7 +12,7 @@ server.use(cors())
 server.use(express.json())
 
 server.use("/categories", categoriesRouter)
-// server.use("/products", productsRouter)
+server.use("/products", productsRouter)
 // server.use("/reviews", reviewsRouter)
 // server.use("/cart", cartRouter)
 
