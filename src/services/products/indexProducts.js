@@ -25,16 +25,52 @@ productsRouter
     }
   })
 
-productsRouter.route("/:id").get(async (req, res, next) => {
-  try {
-    const getOne = await Product.findByPk(req.param.id)
+productsRouter
+  .route("/:id")
+  .get(async (req, res, next) => {
+    try {
+      const getOneProduct = await Product.findByPk(req.params.id)
+      console.log(getOneProduct, "XXXXXXXXX")
 
-    res.send(getOne)
-    // getOne
-    //   ? res.send(getOne)
-    //   : res.send(`The product with id ${req.params.id} was not found.`)
-  } catch (error) {
-    next(error)
-  }
-})
+      getOneProduct
+        ? res.send(getOneProduct)
+        : res.send(`The product with id ${req.params.id} was not found.`)
+    } catch (error) {
+      next(error)
+    }
+  })
+  .put(async (req, res, next) => {
+    try {
+      const updateOneProduct = await Product.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+        returning: true,
+      })
+      res.send(updateOneProduct[1][0])
+      // updateOneProduct
+      //   ? res.send(updateOneProduct[1][0])
+      //   : res.send(`The product with id ${req.params.id} was not found.`)
+    } catch (error) {
+      next(error)
+    }
+  })
+  .delete(async (req, res, next) => {
+    try {
+      const deleteOne = await Product.destroy({
+        where: {
+          id: req.params.id,
+        },
+      })
+      deleteOne > 0
+        ? res.send(
+            `The product with the id ${req.params.id} was successfully deleted.`
+          )
+        : res
+            .status(404)
+            .send(`The product with id ${req.params.id} wasn't found`)
+    } catch (error) {
+      next(error)
+    }
+  })
 export default productsRouter

@@ -10,8 +10,8 @@ const sequelize = new Sequelize(PGDATABASE, PGUSERNAME, PGPASSWORD, {
 
 export const syncSequelize = async () => {
   try {
-    await sequelize.authenticate()
-    await sequelize.sync({ force: true })
+    // await sequelize.authenticate()
+    await sequelize.sync()
 
     console.log("📚 DataBase authenticated")
   } catch (error) {
@@ -20,3 +20,4 @@ export const syncSequelize = async () => {
 }
 
 export default sequelize
+
