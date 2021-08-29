@@ -30,7 +30,6 @@ productsRouter
   .get(async (req, res, next) => {
     try {
       const getOneProduct = await Product.findByPk(req.params.id)
-      console.log(getOneProduct, "XXXXXXXXX")
 
       getOneProduct
         ? res.send(getOneProduct)
@@ -47,10 +46,10 @@ productsRouter
         },
         returning: true,
       })
-      res.send(updateOneProduct[1][0])
-      // updateOneProduct
-      //   ? res.send(updateOneProduct[1][0])
-      //   : res.send(`The product with id ${req.params.id} was not found.`)
+      
+      updateOneProduct[1][0]
+        ? res.send(updateOneProduct[1][0])
+        : res.send(`The product with id ${req.params.id} was not found.`)
     } catch (error) {
       next(error)
     }

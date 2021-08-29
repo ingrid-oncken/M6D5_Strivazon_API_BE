@@ -20,4 +20,3 @@ export const syncSequelize = async () => {
 }
 
 export default sequelize
-
