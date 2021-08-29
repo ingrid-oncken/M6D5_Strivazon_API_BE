@@ -4,6 +4,7 @@ import { syncSequelize } from "./db/db_connection.js"
 import categoriesRouter from "./services/category/indexCategory.js"
 import productsRouter from "./services/products/indexProducts.js"
 import reviewsRouter from "./services/reviews/indexReviews.js"
+import cartRouter from "./services/Cart/indexCart.js"
 
 const server = express()
 
@@ -15,7 +16,7 @@ server.use(express.json())
 server.use("/categories", categoriesRouter)
 server.use("/products", productsRouter)
 server.use("/reviews", reviewsRouter)
-// server.use("/cart", cartRouter)
+server.use("/cart", cartRouter)
 
 server.listen(port, async () => {
   console.log("🚀 Server is running on port ", port)
