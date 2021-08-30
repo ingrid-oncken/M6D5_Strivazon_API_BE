@@ -18,9 +18,9 @@ const User = sequelize.define("user", {
   },
   email: {
     type: DataTypes.STRING,
-    // validate: {
-    //   isEmail: true,
-    // },
+    validate: {
+      isEmail: true,
+    },
   },
 })
 export default User
